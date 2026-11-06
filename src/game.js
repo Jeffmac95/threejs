@@ -19,8 +19,8 @@ export default class Game {
         document.body.appendChild(this.renderer.domElement);
 
         this.room = new Room(this.scene);
-        this.targetManager = new TargetManager(this.scene);
         this.target = new Target(1, 8);
+        this.targetManager = new TargetManager(this.scene, this.target.geometry, this.target.material, this.target.radius);
         this.raycaster = new Raycaster(this.camera);
         this.weapon = new Weapon(this.camera, this.raycaster);
         this.ui = new UI();
@@ -37,7 +37,6 @@ export default class Game {
         this.camera.add(this.weapon);
         this.scene.add(this.camera);
         this.scene.add(this.light);
-        this.renderer.domElement.addEventListener("click", () => this.controls.lock());
         this.renderer.setAnimationLoop(() => {
             this.renderer.render(this.scene, this.camera);
         });
@@ -48,7 +47,7 @@ export default class Game {
             if (this.state === "playing") this.setState("menu");
         });
 
-        this.targetManager.createTargets(this.target.geometry, this.target.material);
+        this.targetManager.fillTargets();
 
         this.handleInput();
     }
@@ -57,6 +56,8 @@ export default class Game {
         this.room.cleanUp();
         this.weapon.cleanUp();
         this.target.cleanUp();
+        this.targetManager.cleanUp();
+        this.scene.cleanUp();
     }
 
     setState(state) {
@@ -83,6 +84,8 @@ export default class Game {
 
         if (hit) {
             this.targetManager.removeTarget(hit.object);
+            this.targetManager.fillTargets();
+            this.score++;
         }
     }
 }
