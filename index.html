@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div id="crosshair">
+        <span></span>
+    </div>
+
+    <!-- UI -->
+    <div id="menu" class="screen">
+        <h1>Aim Trainer</h1>
+        <button id="play">Play</button>
+    </div>
+
+    <div id="game-over" class="screen hidden">
+        <h1>Game Over</h1>
+        <p>
+            Score:
+                <span id="final-score">0</span>
+        </p>
+        <button id="restart">Play Again</button>
+    </div>
+
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
