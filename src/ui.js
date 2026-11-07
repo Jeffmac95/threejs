@@ -2,6 +2,7 @@ export default class UI {
     constructor() {
         this.screens = {
             menu: document.getElementById("menu"),
+            paused: document.getElementById("paused"),
             gameover: document.getElementById("game-over")
         };
         this.playBtn = document.getElementById("play");
@@ -9,6 +10,8 @@ export default class UI {
         this.finalScore = document.getElementById("final-score");
         this.timeEl = document.getElementById("time");
         this.hud = document.getElementById("hud");
+        this.resumeBtn = document.getElementById("resume");
+        this.quitBtn = document.getElementById("quit");
     }
 
     show(state) {

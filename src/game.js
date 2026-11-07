@@ -48,8 +48,10 @@ export default class Game {
 
         this.ui.playBtn.addEventListener("click", () => this.play());
         this.ui.restartBtn.addEventListener("click", () => this.play());
+        this.ui.resumeBtn.addEventListener("click", () => this.resume());
+        this.ui.quitBtn.addEventListener("click", () => this.setState("menu"));
         this.controls.addEventListener("unlock", () => {
-            if (this.state === "playing") this.setState("menu");
+            if (this.state === "playing") this.pause();
         });
 
         this.targetManager.fillTargets();
@@ -74,6 +76,16 @@ export default class Game {
         this.score = 0;
         this.roundStart = performance.now();
         this.timeLeft = this.roundLength;
+        this.setState("playing");
+        this.controls.lock();
+    }
+
+    pause() {
+        this.setState("paused");
+    }
+
+    resume() {
+        this.roundStart = performance.now() - (this.roundLength - this.timeLeft) * 1000;
         this.setState("playing");
         this.controls.lock();
     }
