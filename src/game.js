@@ -28,6 +28,10 @@ export default class Game {
 
         this.state = "menu";
 
+        this.roundLength = 60;
+        this.roundStart = 0;
+        this.timeLeft = this.roundLength;
+
         this.controls = new PointerLockControls(this.camera, this.renderer.domElement);
 
         this.light = new THREE.HemisphereLight(0xffffff, 0x444444, 2);
@@ -38,6 +42,7 @@ export default class Game {
         this.scene.add(this.camera);
         this.scene.add(this.light);
         this.renderer.setAnimationLoop(() => {
+            this.update();
             this.renderer.render(this.scene, this.camera);
         });
 
@@ -67,8 +72,26 @@ export default class Game {
 
     play() {
         this.score = 0;
+        this.roundStart = performance.now();
+        this.timeLeft = this.roundLength;
         this.setState("playing");
         this.controls.lock();
+    }
+
+    endRound() {
+        this.ui.finalScore.textContent = this.score;
+        this.setState("gameover");
+        this.controls.unlock();
+    }
+
+    update() {
+        if (this.state !== "playing") return;
+
+        const elapsed = (performance.now() - this.roundStart) / 1000;
+        this.timeLeft = this.roundLength - elapsed;
+        this.ui.setTime(Math.max(0, Math.ceil(this.timeLeft)));
+
+        if (this.timeLeft <= 0) this.endRound();
     }
 
     handleInput() {

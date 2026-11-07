@@ -19,6 +19,15 @@ body { margin: 0; }
     height: 4px;
 }
 
+#hud {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    z-index: 12;
+    color: #fff;
+    font-size: 2rem;
+}
+
 .screen {
     position: fixed;
     inset: 0;

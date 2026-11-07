@@ -4,8 +4,12 @@ export default class Room {
     constructor(scene) {
         this.scene = scene;
 
+        const loader = new THREE.TextureLoader();
+        this.floorTexture = loader.load("/metal.png");
+        this.floorTexture.colorSpace = THREE.SRGBColorSpace;
+        this.floorTexture.anisotropy = 8;
         this.floorGeometry = new THREE.PlaneGeometry(20, 20);
-        this.floorMaterial = new THREE.MeshBasicMaterial({ color: 0x171B2D }); // #171B2D  222222
+        this.floorMaterial = new THREE.MeshStandardMaterial({ map: this.floorTexture, roughness: 0.9 }); // #171B2D  222222 0x171B2D
 
         this.backWallGeometry = new THREE.BoxGeometry(20, 5, 0.5);
         this.leftWallGeometry = new THREE.BoxGeometry(0.5, 5, 20);
@@ -44,5 +48,6 @@ export default class Room {
         this.backWallGeometry.dispose();
         this.leftWallGeometry.dispose();
         this.rightWallGeometry.dispose();
+        this.floorTexture.dispose();
     }
 }
