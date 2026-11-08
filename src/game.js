@@ -19,7 +19,7 @@ export default class Game {
         document.body.appendChild(this.renderer.domElement);
 
         this.room = new Room(this.scene);
-        this.target = new Target(1, 8);
+        this.target = new Target(1, 32);
         this.targetManager = new TargetManager(this.scene, this.target.geometry, this.target.material, this.target.radius);
         this.raycaster = new Raycaster(this.camera);
         this.weapon = new Weapon(this.camera, this.raycaster);
